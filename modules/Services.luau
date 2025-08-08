@@ -1,13 +1,12 @@
 local Library : { [any] : any} = {}; do 
     Library.__index = Library 
 
-    local GameGetService = game.GetService 
     local CloneReference = cloneref or function(... : any) 
         return ... 
     end 
 
     Library.Get = function(self, Name : string) : ServiceProvider
-        local Service = CloneReference(GameGetService(Name))
+        local Service = CloneReference(game:GetService(Name))
         Library[Name] = Service 
         return Service 
     end
