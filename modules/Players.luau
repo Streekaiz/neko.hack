@@ -8,9 +8,12 @@ local Library : {[any] : any} = {}; do
 
     local MathHuge = math.huge
     local Environment = getgenv() or _G
+    local CloneReference = cloneref or function(... : any) -- // i can just use the services module but it doesn't work so ermm wtf?
+        return ... 
+    end 
 
-    local Players = Environment.Services:Get("Players")
-    local UserInputService = Environment.Services:Get("UserInputService")
+    local Players = CloneReference(game:GetService("Players"))
+    local UserInputService = CloneReference(game:GetService("UserInputService"))
 
     local Camera = workspace.CurrentCamera 
     local LocalPlayer = Players.LocalPlayer
