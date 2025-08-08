@@ -29,4 +29,4 @@ local Library : {[any] : any} = {}; do
 
         mousemoverel((Position.X - Mouse.X) * (SmoothingX / 100), (Position.Y - Mouse.Y) * (SmoothingY / 100))
     end
-end 
+end
