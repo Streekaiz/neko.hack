@@ -28,11 +28,11 @@ Environment["Neko"]["Target Data"] = { -- // Could add some more stuff for more 
 }
 
 Environment["Neko"]["Update"] = function(Delta)
-    Environment["Neko"]["Local Player Data"].Alive, Environment["Neko"]["Local Player Data"].Character, Environment["Neko"]["Local Player Data"].HumanoidRootPart, Environment["Neko"]["Local Player Data"].Humanoid = Library:IsAlive(LocalPlayer)
+    Environment["Neko"]["Local Player Data"].Alive, Environment["Neko"]["Local Player Data"].Character, Environment["Neko"]["Local Player Data"].HumanoidRootPart, Environment["Neko"]["Local Player Data"].Humanoid = Environment["Neko"]["Players"]:IsAlive(LocalPlayer)
     if not Environment["Neko"]["Local Player Data"].Alive then return end 
 
     if (Library.Flags["aimAssistEnabled"] and Library.Flags["aimAssistKey"].Active) then 
-        Environment["Neko"]["Target Data"].Player, Environment["Neko"]["Target Data"].Magnitude = Environment["Neko"]["Players"]:GetClosestPlayer("Mouse", function(Player: Player, Magnitude: number, Character: any, HumanoidRootPart: BasePart?, Humanoid: Humanoid, CurrentPlayer: Player)
+        Environment["Neko"]["Target Data"].Player, Environment["Neko"]["Target Data"].Magnitude = Environment["Neko"]["Players"]:GetClosestPlayer("Mouse", function(Player: Player, Magnitude: number, Character: any, HumanoidRootPart: BasePart, Humanoid: Humanoid, CurrentPlayer: Player)
             if (Library.Flags["targetValidation"]["Team"] and Environment["Neko"]["Players"]:IsFriendly(Player, LocalPlayer.Team)) then 
                 return false 
             end
@@ -46,7 +46,7 @@ Environment["Neko"]["Update"] = function(Delta)
             end 
 
             if Library.Flags["targetDistanceEnabled"] then 
-                local Distance = (Environment["Neko"]["Local Player Data"].HumanoidRootPart.Position - Character.HumanoidRootPart.Position).Magnitude 
+                local Distance = (Environment["Neko"]["Local Player Data"].HumanoidRootPart.Position - HumanoidRootPart.Position).Magnitude 
 
                 if Distance > Library.Flags["targetDistanceMax"] then 
                     return false 
