@@ -50,7 +50,7 @@ local Panel : {[any] : any} = Window:Panel({
                Section:Toggle({Flag = "aimAssistEnabled", Name = "Enabled", Tooltip = {Title = "Aim Assist", Text = "Curves your mouse towards the closest player.", Width = 100}}):Keybind({Flag = "aimAssistKey", Name = "Aim Assist", Mode = "Hold"})
                 Section:Dropdown({Flag = "aimAssistMethod", Options = {"Mouse", "Camera"}, Default = "Mouse"})
                 Section:Dropdown({Flag = "aimAssistTarget", Name = "Body Priority", Options = {"Head", "Torso", "Arms", "Legs"}, Default = {"Head", "Torso"}, Multi = true})
-                Section:Toggle({Flag = "aimAssistSmoothingEnabled", Name = "Smoothing Assist", Tooltip = {Title = "Smoothing", Text = "Instead of instantly flicking; smoothes out the time to reach the player.", Width = 100}})
+                Section:Toggle({Flag = "aimAssistSmoothingEnabled", Name = "Smoothing Assist", Default = true, Tooltip = {Title = "Smoothing", Text = "Instead of instantly flicking; smoothes out the time to reach the player.", Width = 100}})
                 Section:Slider({Flag = "aimAssistSmoothingX", Name = "X Factor", Min = 0, Max = 100, Default = 50, Suffix = "%", Decimals = 0.5})
                 Section:Slider({Flag = "aimAssistSmoothingY", Name = "Y Factor", Min = 0, Max = 100, Default = 50, Suffix = "%", Decimals = 0.5})
                 Section:Toggle({Flag = "aimAssistStickyEnabled", Name = "Sticky Aim", Tooltip = {Title = "Sticky Aim Assist", Text = "Stops moving your mouse once it's onto the target."}})

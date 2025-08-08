@@ -17,7 +17,7 @@ local Library : {[any] : any} = {}; do
     local Camera = workspace.CurrentCamera 
     local LocalPlayer = Players.LocalPlayer
 
-    Library.IsAlive = function(self, Player : Player, IncludeParts : boolean?) : boolean
+    Library.IsAlive = function(self, Player : Player) : boolean
         local Character = Library:GetCharacter(Player)
 
         if not Character then 
@@ -34,11 +34,7 @@ local Library : {[any] : any} = {}; do
             return false
         end
 
-        if IncludeParts then 
-            return true, Character, HumanoidRootPart, Humanoid 
-        end
-
-        return true 
+        return true, Character, HumanoidRootPart, Humanoid 
     end
 
     Library.IsFriendly = function(self, Player : Player, SecondPlayer : Player, IncludeTeam : boolean?) : boolean
@@ -63,6 +59,10 @@ local Library : {[any] : any} = {}; do
 
     Library.GetHumanoid = function(self, Character : Model?) : Humanoid?
         return FindFirstChildOfClass(Character, "Humanoid")
+    end
+
+    Library.GetHealth = function(self, Humanoid : Humanoid) : number
+        return Humanoid.Health, Humanoid.MaxHealth 
     end
 
     Library.GetBodyParts = function(self, Character : Model, RootPart : Part?, Indexes : boolean?, Hitboxes : {string}?)
