@@ -6,7 +6,7 @@ local Library : {[any] : any} = {} do
     local ToString = tostring 
     
     local Environment = getgenv() or _G
-
+    
     Library.Create = function(self, ClassName : string, Properties : {}?, Name : string?) : {Instance : Instance, ClassName : string, Properties : {[string] : any}, Name : string}
         Properties = Properties or {}
         Name = Name or ToString(MathRandom(1, 1000))
