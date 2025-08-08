@@ -1,5 +1,14 @@
-local Author: string = "Streekaiz"
-local Repository: string = "neko.hack"
+local Environment : {[any] : any} = getgenv()
+local Author : string = "Streekaiz"
+local Repository : string = "neko.hack"
+local LoadTick : number = tick()
+
+local StringFormat : (any) = string.format
+local Debug = function(Data : string)
+    if Environment["DEBUG"] then 
+        warn(Data)
+    end
+end
 
 local Modules : {string} = {
     "Cats",
@@ -11,7 +20,6 @@ local Modules : {string} = {
     "Players"
 }
 
-local Environment : {[any] : any} = getgenv()
 Environment["Neko"] = {}
 
 for Index, Module in next, Modules do 
@@ -21,18 +29,19 @@ for Index, Module in next, Modules do
     Success, Source = pcall(function()
         return loadstring(
             game:HttpGet(
-                string.format('https://raw.githubusercontent.com/%s/%s/main/modules/%s.luau', Author, Repository, Module)
+                StringFormat('https://raw.githubusercontent.com/%s/%s/main/modules/%s.luau', Author, Repository, Module)
             ), Module
         ) 
     end)
 
     if not Success then 
-        print("Failed to fetch " .. Module .. ".luau")
-        print(string.format("Error Message: %s", tostring(Source)))
+        Debug(StringFormat("Failed to fetch %s.luau", Module))
+        Debug(StringFormat("Error Message: %s", tostring(Source)))
         continue 
     end
 
     Environment["Neko"][Module] = Source()
+    Debug(StringFormat("Loaded %s in %s milliseconds", LoadTick - tick()))
 end
 
 Environment["Neko"].Build = "Public"
