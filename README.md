@@ -4,53 +4,21 @@ A open source extension written in LUAU.
 For any questions/inquiries, DM @streekaiz on Discord (responses will be a bit late).
 ## loader (incomplete)
 ```lua
-local Environment : {[any] : any} = getgenv()
-local Author : string = "Streekaiz"
-local Repository : string = "neko.hack"
-local LoadTick : number = tick()
+local NekoInit = loadstring(game:HttpGet("https://raw.githubusercontent.com/Streekaiz/neko.hack/refs/heads/main/loader.luau"),
+    [[
+        author: @streekaizu
+        repository: @neko.hack 
+        description: 
+            open source extension written in luau
+            dm me on discord @streekaiz for any questions/inquiries
+    ]]
+)
 
-local StringFormat : (any) = string.format
-local Debug = function(Data : string)
-    if Environment["DEBUG"] then 
-        warn(Data)
-    end
-end
+if not game:IsLoaded() then 
+    game.Loaded:Wait()
+end 
 
-local Modules : {string} = {
-    "Cats",
-    "Services",
-    "Signals",
-    "String",
-    "Miscallaenous",
-    "Instances",
-    "Players"
-}
-
-Environment["Neko"] = {}
-
-for Index, Module in next, Modules do 
-    local Success : boolean = false 
-    local Source: (() -> any)
-
-    Success, Source = pcall(function()
-        return loadstring(
-            game:HttpGet(
-                StringFormat('https://raw.githubusercontent.com/%s/%s/main/modules/%s.luau', Author, Repository, Module)
-            ), Module
-        ) 
-    end)
-
-    if not Success then 
-        Debug(StringFormat("Failed to fetch %s.luau", Module))
-        Debug(StringFormat("Error Message: %s", tostring(Source)))
-        continue 
-    end
-
-    Environment["Neko"][Module] = Source()
-    Debug(StringFormat("Loaded %s in %s milliseconds", LoadTick - tick()))
-end
-
-return Environment["Neko"] -- // yippee!
+NekoInit()
 ```
 
 ## info
