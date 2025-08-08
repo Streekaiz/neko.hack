@@ -7,7 +7,6 @@ local Library : {[any] : any} = {}; do
     local TableFind = table.find 
 
     local MathHuge = math.huge
-    local Environment = getgenv() or _G
     local CloneReference = cloneref or function(... : any) -- // i can just use the services module but it doesn't work so ermm wtf?
         return ... 
     end 

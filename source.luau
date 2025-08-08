@@ -1,7 +1,7 @@
 local Author: string = "Streekaiz"
 local Repository: string = "neko.hack"
 
-local Modules : {string} = { -- // Load independent files first
+local Modules : {string} = {
     "Services",
     "Signals",
     "String",
@@ -10,8 +10,7 @@ local Modules : {string} = { -- // Load independent files first
     "Players"
 }
 
-local Environment : {[any] : any} = getgenv() or _G or {} 
-
+local Environment : {[any] : any} = getgenv()
 Environment["Neko"] = {}
 
 for Index, Module in next, Modules do 
@@ -19,7 +18,11 @@ for Index, Module in next, Modules do
     local Source: (() -> any)
 
     Success, Source = pcall(function()
-        return loadstring(game:HttpGet(string.format("https://raw.githubusercontent.com/%s/%s/main/modules/%s.luau", Author, Repository, Module)))
+        return loadstring(
+            game:HttpGet(
+                string.format('https://raw.githubusercontent.com/%s/%s/main/modules/%s.luau', Author, Repository, Module)
+            ), Module
+        ) 
     end)
 
     if not Success then 
@@ -28,18 +31,11 @@ for Index, Module in next, Modules do
         continue 
     end
 
-    print("Loading Module: " .. Module)
-
     Environment["Neko"][Module] = Source()
-
-    print("Loaded Module " .. Module)
-    for i, v in next, Environment["Neko"] do 
-        print(i, v)
-    end 
 end
 
 Environment["Neko"].Build = "Public"
 Environment["Neko"].UID = 0
 Environment["Neko"].Version = 1.00
 
-return Environment["Neko"]
+return Environment["Neko"] -- // yippee!
