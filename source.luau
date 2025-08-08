@@ -2,6 +2,7 @@ local Author: string = "Streekaiz"
 local Repository: string = "neko.hack"
 
 local Modules : {string} = {
+    "Cats",
     "Services",
     "Signals",
     "String",
