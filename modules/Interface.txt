@@ -2575,7 +2575,8 @@
 
         function Library:Column(properties)
             local Cfg = {
-                Items = {}
+                Items = {},
+                Fill = properties and properties.Fill or false 
             }
 
             local Items = Cfg.Items; do 
@@ -2589,12 +2590,16 @@
                     BackgroundColor3 = rgb(255, 255, 255)
                 });
 
-                Library:Create( "UIListLayout" , {
+                Items.ListLayout = Library:Create( "UIListLayout" , {
                     Parent = Items.Column;
                     SortOrder = Enum.SortOrder.LayoutOrder;
                     HorizontalFlex = Enum.UIFlexAlignment.Fill;
                     Padding = dim(0, 11);
                 });
+
+                if Cfg.Fill then 
+                    Items.ListLayout.VerticalFlex = Enum.UIFlexAlignment.Fill
+                end 
             end 
 
             return setmetatable(Cfg, Library) 
@@ -4983,6 +4988,8 @@
                     end})
                 end})
             -- 
+
+            return Tab 
         end
     --
         
@@ -8739,26 +8746,32 @@
 
  Esp.Loop = RunService:BindToRenderStep("Run Loop", 400, Esp.Update)
 
-return Library, Esp, MiscOptions, Options, function(AddPlayers : boolean)
-    for index,value in MiscOptions do 
-        Options[index] = value -- gotta trigger that new index
-    end
+return {
+    ["Library"] = Library, 
+    ["ESP"] = Esp, 
+    ["MiscOptions"] = MiscOptions, 
+    ["Options"] = Options, 
+    ["ESPInit"] = function(AddPlayers : boolean)
+        for index,value in MiscOptions do 
+            Options[index] = value -- gotta trigger that new index
+        end
 
-    if AddPlayers then 
-        for _,player in Players:GetPlayers() do 
-            if player == LocalPlayer then 
-                continue 
+        if AddPlayers then 
+            for _,player in Players:GetPlayers() do 
+                if player == LocalPlayer then 
+                    continue 
+                end 
+
+                Esp.CreateObject(player)
             end 
+            Esp:Connection(Players.PlayerRemoving, Esp.RemovePlayer)
+            Esp:Connection(Players.PlayerAdded, function(player)
+                Esp.CreateObject(player)
 
-            Esp.CreateObject(player)
+                for index,value in MiscOptions do 
+                    Options[index] = value
+                end 
+            end)
         end 
-        Esp:Connection(Players.PlayerRemoving, Esp.RemovePlayer)
-        Esp:Connection(Players.PlayerAdded, function(player)
-            Esp.CreateObject(player)
-
-            for index,value in MiscOptions do 
-                Options[index] = value
-            end 
-        end)
-    end 
-end 
+    end
+}

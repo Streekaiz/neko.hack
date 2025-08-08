@@ -17,7 +17,8 @@ local Modules : {string} = {
     "String",
     "Miscallaenous",
     "Instances",
-    "Players"
+    "Players",
+    "Interface"
 }
 
 Environment["Neko"] = {}
