@@ -104,7 +104,7 @@ local Library : {[any] : any} = {}; do
                 
                 local ScreenPosition = Camera:WorldToViewportPoint(HumanoidRootPart.Position)
                 local MousePosition = Vector2.new(Mouse.X, Mouse.Y)
-                local Magnitude = (ScreenPosition - MousePosition).Magnitude
+                local Magnitude = (Vector2.new(ScreenPosition.X, ScreenPosition.Y) - MousePosition).Magnitude
 
                 if not Validate(Player, Magnitude, Character, HumanoidRootPart, Humanoid, ClosestPlayer) then continue end 
 
@@ -127,7 +127,7 @@ local Library : {[any] : any} = {}; do
         for _, Object in next, Character:GetChildren() do 
             if Object:IsA("BasePart") then 
                 local Position = Camera:WorldToViewportPoint(Object.Position)
-                local Magnitude = (Position - Mouse).Magnitude
+                local Magnitude = (Vector2.new(Position.X, Position.Y) - Mouse).Magnitude
 
                 if Magnitude < PartMagnitude and table.find(List, Object) then 
                     ClosestPart = Object 
@@ -138,6 +138,6 @@ local Library : {[any] : any} = {}; do
 
         return ClosestPart, PartMagnitude 
     end
-end
+end 
 
 return Library 
