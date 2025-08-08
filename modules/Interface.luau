@@ -2909,7 +2909,7 @@
                 -- Value Settings
                 Min = properties.Min or 0,
                 Max = properties.Max or 100,
-                Intervals = properties.Decimal or 1,
+                Intervals = properties.Decimal or properties.Intervals or properties.Decimals or 1,
                 Value = properties.Default or 10, 
 
                 -- Other
@@ -6340,7 +6340,7 @@
                             Size = dim2(1, 0, 0, 0);
                             BorderSizePixel = 0;
                             AutomaticSize = Enum.AutomaticSize.XY;
-                            TextSize = 9;
+                            TextSize = 12;
                             TextXAlignment = Enum.TextXAlignment.Left;
                             BackgroundColor3 = rgb(255, 255, 255)
                         });	Library:Themify(Elements.Text, "unselected", "BackgroundColor3")
@@ -8750,28 +8750,5 @@ return {
     ["Library"] = Library, 
     ["ESP"] = Esp, 
     ["MiscOptions"] = MiscOptions, 
-    ["Options"] = Options, 
-    ["ESPInit"] = function(AddPlayers : boolean)
-        for index,value in MiscOptions do 
-            Options[index] = value -- gotta trigger that new index
-        end
-
-        if AddPlayers then 
-            for _,player in Players:GetPlayers() do 
-                if player == LocalPlayer then 
-                    continue 
-                end 
-
-                Esp.CreateObject(player)
-            end 
-            Esp:Connection(Players.PlayerRemoving, Esp.RemovePlayer)
-            Esp:Connection(Players.PlayerAdded, function(player)
-                Esp.CreateObject(player)
-
-                for index,value in MiscOptions do 
-                    Options[index] = value
-                end 
-            end)
-        end 
-    end
+    ["Options"] = Options
 }
